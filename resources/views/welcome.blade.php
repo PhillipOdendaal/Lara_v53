@@ -63,6 +63,10 @@
                 margin-bottom: 30px;
             }
         </style>
+    
+    <!-- Elixer Mixes -->
+    <link rel="stylesheet" href="{{ elixir('css/style.min.css') }}" />
+    <script src="{{ elixir('js/app.min.js') }}"></script>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
