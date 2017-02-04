@@ -1,5 +1,8 @@
 // gulpfile.js
 
+// Add Elixer to mix
+elixir = require('laravel-elixir');
+
 // --- INIT
 var gulp = require('gulp'),  
     less = require('gulp-less'), // compiles less to CSS
@@ -9,10 +12,8 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'), // minifies JS
     rename = require('gulp-rename'),
     phpunit = require('gulp-phpunit'),
-    //countWord = require('gulp-count-stat'),
-    //count = require('gulp-count'),
-    //coffee = require('coffee-gulp');
     gp_sourcemaps = require('gulp-sourcemaps'),
+    del = require('del'),
     gp_print = require('gulp-print');
 
 // Paths variables
@@ -24,22 +25,20 @@ var paths = {
         'vendor': './public/dev/vendor/'
     },
     'assets': {
-        //'css': './Tangent_v2/public/assets/css/',
-        'css': './public/css/',
-        //'js': './Tangent_v2/public/assets/js/',
-        'js': './public/js/',
+        'css': './public/assets/css/',
+        'js': './public/assets/js/',
         'vendor': './public/assets/bower_vendor/'
+    },
+    'build': {
+        'css': './public/build/css/',
+        'js': './public/build/js/',
+    },
+    'public': {
+        'css': './public/css/',
+        'js': './public/js/',
     }
 
 };
-
-//var count = require('gulp-count');
-
-// Adding Elixer to mix
-//var elixir = require('laravel-elixir');
-//var webpack = require('laravel-elixir-webpack');
-elixir = require('laravel-elixir');
-webpack = require('laravel-elixir-webpack');
 
 // --- TASKS
 // CSS frontend
@@ -52,7 +51,6 @@ gulp.task('frontend.css', function() {
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest(paths.assets.css)); // output: frontend.min.css
 });
-
 // CSS backend
 gulp.task('backend.css', function() {  
   // place code for your default task here
@@ -75,7 +73,6 @@ gulp.task('frontend.js', function(){
     .pipe(uglify())
     .pipe(gulp.dest(paths.assets.js));
 });
-
 // JS backend
 gulp.task('backend.js', function(){  
   return gulp.src([
@@ -90,8 +87,35 @@ gulp.task('backend.js', function(){
     .pipe(gulp.dest(paths.assets.js));
 });
 
+// All CSS
+gulp.task('style.css', function() {  
+  return gulp.src([
+      paths.dev.less+'frontend.less',
+      paths.dev.less+'bootstrap.less',
+      paths.dev.less+'variables.less'
+  ]).pipe(less())   
+    .pipe(concat('style.css'))
+    .pipe(gulp.dest(paths.assets.css)) // output: style.css
+    .pipe(minify({keepSpecialComments:0}))
+    .pipe(rename({suffix: '.min'}))
+    .pipe(gulp.dest(paths.public.css)); // output: style.min.css
+});
 
+// All JS
+gulp.task('app.js', function(){  
+  return gulp.src([
+      paths.assets.vendor+'jquery/dist/jquery.js',
+      paths.assets.vendor+'bootstrap/dist/js/bootstrap.js',
+    ])
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest(paths.assets.js))
+    //.pipe(gp_sourcemaps.init()) //Source map already started in build
+    .pipe(uglify())
+    .pipe(rename({suffix: '.min'}))
+    .pipe(gulp.dest(paths.public.js));
+});
 
+// Print All
 gulp.task('gp_print', function() {
   gulp.src([
       paths.dev.js+'/*.js',
@@ -100,55 +124,21 @@ gulp.task('gp_print', function() {
     .pipe(gp_print());
 });
 
-// All CSS
-gulp.task('style.css', function() {  
-  return gulp.src([
-      paths.dev.less+'frontend.less',
-      paths.dev.less+'bootstrap.less'
-  ]).pipe(less())   
-    .pipe(concat('style.css'))
-    .pipe(gulp.dest(paths.assets.css)) // output: style.css
-    .pipe(minify({keepSpecialComments:0}))
-    .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest(paths.assets.css)); // output: style.min.css
+// Cleanup paths
+elixir.extend('remove', function(path) {
+    new elixir.Task('remove', function() {
+        del(path);
+    });
 });
-// All JS
-gulp.task('app.js', function(){  
-  return gulp.src([
-      paths.assets.vendor+'jquery/dist/jquery.js',
-      paths.assets.vendor+'bootstrap/dist/js/bootstrap.js',
-    ])
-    .pipe(gp_sourcemaps.init())
-    .pipe(concat('app.js'))
-    .pipe(gulp.dest(paths.assets.js))
-    .pipe(uglify())
-    .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest(paths.assets.js));
+/*
+// 
+elixir.extend('print', function(gp_print) {
+    new gulp.task('print', function() {
+      gulp.src(gp_print)
+       .pipe(print());
+    });
 });
-
-// PHP unit
-/**
-gulp.task('phpunit', function() {  
-  var options = {debug: false, notify: false};
-  return gulp.src('./laravel/app/tests/*.php')
-    .pipe(phpunit('./laravel/vendor/bin/phpunit', options))
-    // .pipe(phpunit())
-
-    //both notify and notify.onError will take optional notifier: growlNotifier for windows notifications
-    //if options.notify is true be sure to handle the error here or suffer the consequenses!
-    .on('error', notify.onError({
-      title: 'PHPUnit Failed',
-      message: 'One or more tests failed, see the cli for details.'
-    }))
-
-        //will fire only if no error is caught
-    .pipe(notify({
-      title: 'PHPUnit Passed',
-      message: 'All tests passed!'
-    }));
-});
-**/
-
+*/
 // --- WATCH
 //Rerun the task when a file changes
 gulp.task('watch', function() { 
@@ -157,18 +147,16 @@ gulp.task('watch', function() {
 });
 
 // --- DEFAULT
-// 
+// Watch default
 gulp.task('default', ['app.js'], function(){});
 gulp.task('default', ['style.css'], function(){});
+
+// --- ELIXER FUNCTIONS
 // Run Elixer to compile and version scripts
-/**
+// Gulp
 elixir(function(mix) {
-    mix.less('frontend.less', 'public/css/app.css');
+    mix.version([paths.public.css+'style.min.css', paths.public.js+'app.min.js']);
+    mix.remove([ paths.public.css, paths.public.js ]);
+    //mix.print([ paths.public.css, paths.public.js ]);
 });
-elixir(function(mix) {
-    mix.webpack('app.js','./public/js');
-});
-**/
-elixir(function(mix) {
-    mix.version([paths.assets.css+'style.min.css', paths.assets.js+'app.min.js']);
-});
+
