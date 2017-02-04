@@ -1,0 +1,6 @@
+{
+  "name": "phillip-boot-strapped",
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
