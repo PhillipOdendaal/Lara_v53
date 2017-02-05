@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,16 +24,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
-    }
-    
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function dashboard()
-    {
-        return view('dashboard');
+        // Get the currently authenticated user...
+        // $user = Auth::user();
+        // Get the currently authenticated user's ID...
+        // $id = Auth::id();
+        // Check if user authenticated
+        // $authenticated = Auth::check(); // true / false
+        
+        if (Auth::id() < 10 && Auth::check() == true){
+            return view('dashboard');
+        }else{
+            return view('home');
+        }
     }
 }

@@ -28,10 +28,8 @@ Route::get('login', function () {
 // BACK ROUTES
 // Uses Auth Middleware
 Route::group(['middleware' => 'auth'], function () {
-    
-    Route::get('/', 'HomeController@dashboard');
 
-    Route::get('/home', 'HomeController@index');
+    Route::get('/', 'HomeController@index');
     
     /**
     Route::get('user/profile', function () {

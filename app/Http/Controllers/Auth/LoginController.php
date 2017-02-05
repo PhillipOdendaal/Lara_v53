@@ -25,7 +25,17 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
+    /**
+    protected function redirectTo()
+    {
+        if (Auth::id() < 10){
+            return '/dashboard';
+        }else{
+            return '/home';
+        }
+    }
+     */
 
     /**
      * Create a new controller instance.
