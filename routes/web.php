@@ -11,6 +11,32 @@
 |
 */
 
+Auth::routes();
+
+// FRONT ROUTES
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+ 
+Route::get('login', function () {
+   return view('welcome');
+})->name('login');
+ */
+
+
+// BACK ROUTES
+// Uses Auth Middleware
+Route::group(['middleware' => 'auth'], function () {
+    
+    Route::get('/', 'HomeController@dashboard');
+
+    Route::get('/home', 'HomeController@index');
+    
+    /**
+    Route::get('user/profile', function () {
+        return view('/user/profile');
+    });
+     */
+});
+
