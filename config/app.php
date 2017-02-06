@@ -167,8 +167,8 @@ return [
         /*
          * Package Service Providers...
          */
-
-        //
+        EllipseSynergie\ApiResponse\Laravel\ResponseServiceProvider::class,
+        Zjango\Laracurl\LaracurlServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -177,12 +177,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-        
-        /*
-         * Ellipse Synergie Api Responses Service Providers...
-         */
-        EllipseSynergie\ApiResponse\Laravel\ResponseServiceProvider::class,
+        App\Providers\RouteServiceProvider::class,        
 
     ],
 
@@ -230,6 +225,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Laracurl'  => Zjango\Laracurl\Facades\Laracurl::class,
 
     ],
 

@@ -37,4 +37,17 @@ class HomeController extends Controller
             return view('home');
         }
     }
+    
+    /**
+     * Load the Swag
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function loadSwagger()
+    {
+        //$user = Auth::user();
+        
+        return view('swagger/swagger')->with('status', 'Swagger Loaded');
+
+    }
 }

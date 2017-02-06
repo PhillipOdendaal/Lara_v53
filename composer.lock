@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "077fdf16a8a90138b008b66471e155db",
-    "content-hash": "f61fe0bcde0f4f41f05636d3af9ed9b3",
+    "hash": "1b90b521e4b1a10bb3bf99a52b5aa783",
+    "content-hash": "bbd8e789f1be455c6e860439fb424d35",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1465,16 +1465,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.10",
+            "version": "5.7.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "bf0804199f516fe80ffcc48ac6d4741c49baeb6e"
+                "reference": "a6ad2472daba76b0689042b7709f86d4f06bcaab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/bf0804199f516fe80ffcc48ac6d4741c49baeb6e",
-                "reference": "bf0804199f516fe80ffcc48ac6d4741c49baeb6e",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a6ad2472daba76b0689042b7709f86d4f06bcaab",
+                "reference": "a6ad2472daba76b0689042b7709f86d4f06bcaab",
                 "shasum": ""
             },
             "require": {
@@ -1543,7 +1543,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-02-04 09:03:53"
+            "time": "2017-02-05 15:31:31"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2493,7 +2493,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -3155,16 +3155,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "50eadbd7926e31842893c957eca362b21592a97d"
+                "reference": "e1718c6bf57e1efbb8793ada951584b2ab27775b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/50eadbd7926e31842893c957eca362b21592a97d",
-                "reference": "50eadbd7926e31842893c957eca362b21592a97d",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/e1718c6bf57e1efbb8793ada951584b2ab27775b",
+                "reference": "e1718c6bf57e1efbb8793ada951584b2ab27775b",
                 "shasum": ""
             },
             "require": {
@@ -3206,7 +3206,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-03 13:51:32"
+            "time": "2017-01-21 17:06:35"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -3307,6 +3307,45 @@
                 "validate"
             ],
             "time": "2016-11-23 20:04:58"
+        },
+        {
+            "name": "zjango/laracurl",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zjango/Laracurl.git",
+                "reference": "b3af1344e12df63a061d2c3692e745c2ed0735cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zjango/Laracurl/zipball/b3af1344e12df63a061d2c3692e745c2ed0735cd",
+                "reference": "b3af1344e12df63a061d2c3692e745c2ed0735cd",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/Zjango"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "zjango",
+                    "email": "zjango@icloud.com"
+                }
+            ],
+            "description": "Laravel 5.0 Package Wrapper For Andreas Lutro's OOP cURL Class",
+            "keywords": [
+                "Laracurl",
+                "curl",
+                "framework",
+                "laravel"
+            ],
+            "time": "2015-05-15 01:52:23"
         }
     ],
     "packages-dev": [
@@ -3580,7 +3619,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "zjango/laracurl": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

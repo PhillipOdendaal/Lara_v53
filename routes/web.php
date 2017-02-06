@@ -31,6 +31,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/', 'HomeController@index');
     
+    Route::get('/swagger', 'HomeController@loadSwagger');
+    
     /**
     Route::get('user/profile', function () {
         return view('/user/profile');
