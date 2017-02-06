@@ -178,6 +178,11 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        
+        /*
+         * Ellipse Synergie Api Responses Service Providers...
+         */
+        EllipseSynergie\ApiResponse\Laravel\ResponseServiceProvider::class,
 
     ],
 
