@@ -71,6 +71,11 @@ Remember, when you do composer updates, you need to run GULP - tasks again NB!
 			<li>php artisan migrate</li>
 		</ul>
 	</li>
+	<li> Optionaly seeds to the tables with content
+		<ul>
+			<li>php artisan db:seed</li>
+		</ul>
+	</li>php artisan db:seed
 	<li> Other Migration Commands
 		<ul>
 			<li>php artisan make:migration create_users_table</li>
@@ -78,6 +83,18 @@ Remember, when you do composer updates, you need to run GULP - tasks again NB!
 			<li>php artisan make:migration create_users_table --create=users</li>
 		</ul>
 	</li>
+</ul>
+
+[3] Confirm Application routes and auth
+
+<ul>
+	<li> php artisan route:list	</li>
+</ul>
+
+[4] Start the Application
+
+<ul>
+	<li> php artisan serve --port:8080	</li>
 </ul>
 
 ## Provisioning scripts
