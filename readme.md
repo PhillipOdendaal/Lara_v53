@@ -59,13 +59,6 @@ Remember, when you do composer updates, you need to run GULP - tasks again NB!
 	
 [2] Run Migration to create tables
 <ul>
-	<li> Update Config Variables</li>
-	<li>../.env</li>
-	<li>../config/database.php</li>
-	<li><a href="https://laravel.com/docs/5.3/migrations">Migration Documentation</a></li>
-</ul>
-
-<ul>
 	<li> Run Laravel Database Migrations
 		<ul>
 			<li>php artisan migrate</li>
@@ -75,12 +68,13 @@ Remember, when you do composer updates, you need to run GULP - tasks again NB!
 		<ul>
 			<li>php artisan db:seed</li>
 		</ul>
-	</li>php artisan db:seed
+	</li>
 	<li> Other Migration Commands
 		<ul>
 			<li>php artisan make:migration create_users_table</li>
 			<li>php artisan make:migration create_users_table --create=users</li>
-			<li>php artisan make:migration create_users_table --create=users</li>
+			<li>php artisan migrate:rollback</li>
+			<li>php artisan migrate:refresh --seed</li>
 		</ul>
 	</li>
 </ul>
