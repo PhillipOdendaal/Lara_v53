@@ -1,27 +1,94 @@
-# Laravel PHP Framework
+<p align="center" id="logo">
+	<img src="https://laravel.com/assets/img/components/logo-laravel.svg" style="margin-bottom:-17px"> 
+	<a id="swagger" href="http://userservice.staging.tangentmicroservices.com/api-explorer/" style="font-size: 1.5em;
+    font-weight: bold;
+    text-decoration: none;
+    background: transparent url(http://projectservice.staging.tangentmicroservices.com/static/rest_framework_swagger/images/logo_small.png) no-repeat left center;
+    padding: 20px 0 20px 40px;
+    color: #2e2e2e;
+	font-family: "Droid Sans", sans-serif;
+	font-size: 2.2em;">Swagger</a> 
+</p>
+	
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+<p align="center">
+<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+## Prerequisites
 
-## Official Documentation
+Following Dependancy Managers used to install application, you need all of them for development purpose
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+<ul>
+	<li><a href="http://php.net/downloads.php">PHP version 5.6.28</a></li>
+	<li><a href="https://getcomposer.org/download/">Composer version 1.2.1</a></li>
+	<li><a href="https://laravel.com/docs/5.3">Laravel version 5.3</a></li>
+	<li><a href="https://laravel.com/docs/5.3">NPM version 3.10.8</a></li>
+</ul>
 
-## Contributing
+## Dependencies added
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+<ul>
+	<li><a href="https://docs.npmjs.com/getting-started/installing-node">Node JS version 6.9.1</a></li>
+	<li><a href="http://getbootstrap.com/getting-started/">Bootstrap version 4</a></li>
+</ul>
 
-## Security Vulnerabilities
+## Fastrack Environment installation / configuration / update
+<ul>
+	<li><a href="https://github.com/PhillipOdendaal/Lara_v53/blob/master/_support/readme.md">Quick Guide</a></li>
+	
+</ul>
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+Update NPM & NODE for GULP - Elixer
 
-## License
+<ul>
+	<li><a href="https://github.com/PhillipOdendaal/Lara_v53/blob/master/_support/readme.md">Gulp for Laravel Elixer support</a></li>
+	<li><a href="https://medium.com/@tadaspaplauskas/using-bootstrap-4-with-laravel-5-3-8d4efb8b82bf#.kcx61k29t">Bootstrap</a></li>
+	<li><a href="http://getbootstrap.com/getting-started/">Get Bootstrap</a></li>
+	<li><a href="http://bootstrapdocs.com/v2.0.2/docs/">Bootstrap Documentation</a></li>
+</ul>
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+## Environment configuration
+
+[1] Configure Env
+<ul>
+	<li>Update Config Variables</li>
+	<li>../.env</li>
+	<li>../config/database.php</li>
+</ul>
+	
+[2] Run Migration to create tables
+<ul>
+	<li> Update Config Variables</li>
+	<li>../.env</li>
+	<li>../config/database.php</li>
+</ul>
+<a href="https://laravel.com/docs/5.3/migrations">Migration Documentation</a>
+<ul>
+	<li> Run Laravel Database Migrations
+		<ul>
+			<li>php artisan migrate</li>
+		</ul>
+	</li>
+	<li> Other Migration Commands
+		<ul>
+			<li>php artisan make:migration create_users_table</li>
+			<li>php artisan make:migration create_users_table --create=users</li>
+			<li>php artisan make:migration create_users_table --create=users</li>
+		</ul>
+	</li>
+</ul>
+[3] Add LESS Bootstrap dependancies
+<ul>
+	<li> Add LESS with NPM
+		<ul>
+			<li>npm install -g less</li>
+		</ul>
+	</li>
+</ul>
+## Provisioning scripts
+	Add
