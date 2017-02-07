@@ -40,16 +40,12 @@ Following Dependancy Managers used to install application, you need all of them 
 ## Fastrack Environment installation / configuration / update
 <ul>
 	<li><a href="https://github.com/PhillipOdendaal/Lara_v53/blob/master/_support/readme.md">Quick Guide</a></li>
-	
 </ul>
 
-Update NPM & NODE for GULP - Elixer
-
+Remember, when you do composer updates, you need to run GULP - tasks again NB!
 <ul>
-	<li><a href="https://github.com/PhillipOdendaal/Lara_v53/blob/master/_support/readme.md">Gulp for Laravel Elixer support</a></li>
-	<li><a href="https://medium.com/@tadaspaplauskas/using-bootstrap-4-with-laravel-5-3-8d4efb8b82bf#.kcx61k29t">Bootstrap</a></li>
-	<li><a href="http://getbootstrap.com/getting-started/">Get Bootstrap</a></li>
-	<li><a href="http://bootstrapdocs.com/v2.0.2/docs/">Bootstrap Documentation</a></li>
+	<li>composer update</li>
+	<li>gulp watch</li>
 </ul>
 
 ## Environment configuration
@@ -66,8 +62,9 @@ Update NPM & NODE for GULP - Elixer
 	<li> Update Config Variables</li>
 	<li>../.env</li>
 	<li>../config/database.php</li>
+	<li><a href="https://laravel.com/docs/5.3/migrations">Migration Documentation</a></li>
 </ul>
-<a href="https://laravel.com/docs/5.3/migrations">Migration Documentation</a>
+
 <ul>
 	<li> Run Laravel Database Migrations
 		<ul>
@@ -82,13 +79,18 @@ Update NPM & NODE for GULP - Elixer
 		</ul>
 	</li>
 </ul>
-[3] Add LESS Bootstrap dependancies
-<ul>
-	<li> Add LESS with NPM
-		<ul>
-			<li>npm install -g less</li>
-		</ul>
-	</li>
-</ul>
+
 ## Provisioning scripts
 	Add
+	
+## Documentation Links
+
+Update NPM & NODE for GULP - Elixer
+
+<ul>
+	<li><a href="https://github.com/PhillipOdendaal/Lara_v53/blob/master/_support/readme.md">Gulp for Laravel Elixer support</a></li>
+	<li><a href="https://medium.com/@tadaspaplauskas/using-bootstrap-4-with-laravel-5-3-8d4efb8b82bf#.kcx61k29t">Bootstrap</a></li>
+	<li><a href="http://getbootstrap.com/getting-started/">Get Bootstrap</a></li>
+	<li><a href="http://bootstrapdocs.com/v2.0.2/docs/">Bootstrap Documentation</a></li>
+</ul>
+

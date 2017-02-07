@@ -37,9 +37,12 @@ Deploy Site from Git for development
 	
 		npm install --global gulp-cli
 		npm install --no-bin-links (for Windows host)
+		
+	[3.4] Install Bower.IO
+	
+		npm install -g bower 
 
 [4] Install additional package from project / app folder
-
 
 	[4.1] Initiate GULP
 	
@@ -92,7 +95,15 @@ Deploy Site from Git for development
 	
 		npm i -D -E babel-preset-es2015@6.9.0
 
-
+[5] Compile Boostrap with vars and LESS
+	
+	* Concat LESS and Webpack files
+	gulp taskname
+	
+	* Version the files
+	gulp watch
+	
+	
 ## Documentation links NPM & NODE for GULP - Elixer
 
 <ul>
@@ -102,15 +113,6 @@ Deploy Site from Git for development
 		</ul>
 	</li>
 </ul>
-
-
-## Screengrabs
-
-<img src="minimatch_update.jpg">
-<img src="gracefull_update.jpg">
-<img src="LESS_update.jpg">
-
-
 
 ## Compile Bootstrap from assets for Elixer
 
@@ -144,10 +146,9 @@ Run from console in app_root
 	</li>
 </ul>
 
-
-[3] Add webpack Bootstrap dependancies
+[4] Add webpack Bootstrap dependancies
 Run from console in app_root
-<ul>Sass_update
+<ul>Webpack_update
 	<li> Add Sass Vendor with NPM
 		<ul>
 			<li>npm install --save-dev laravel-elixir-webpack</li>
@@ -157,7 +158,7 @@ Run from console in app_root
 	</li>
 </ul>
 
-[3] Add SASS Bootstrap dependancies
+[5] Resolve Webpack issue
 Run from console in app_root
 <ul>Webpack_update
 	<li> Nuke old webpack conflict
@@ -167,6 +168,13 @@ Run from console in app_root
 	</li>
 </ul>
 
-	
+
+## Screengrabs
+
+<img src="minimatch_update.jpg">
+<img src="gracefull_update.jpg">
+<img src="LESS_update.jpg">
+
+
 ## Other updates
 
