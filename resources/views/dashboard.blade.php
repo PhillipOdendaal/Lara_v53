@@ -10,7 +10,7 @@
                 </div>
             @endif
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading"><h3>Dashboard</h3></div>
 
                 <div class="panel-body">Statistics about the Site</div>
                 

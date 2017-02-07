@@ -35,7 +35,7 @@ class SwaggerController extends Controller
     }
     public function load()
     {
-        return view('swagger.index')->with('status', 'Swagger Loaded');;
+        return view('swagger.index')->with('status', 'Swagger Loaded');
     }
     
     public function index()

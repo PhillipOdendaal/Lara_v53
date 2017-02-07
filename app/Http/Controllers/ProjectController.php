@@ -16,7 +16,7 @@ class ProjectController extends Controller
     {
         $this->response = $response;
     }
- 
+
     public function index()
     {
         //Get all project
@@ -73,5 +73,10 @@ class ProjectController extends Controller
              return $this->response->errorInternalError('Could not updated/created a project');
         }
  
+    }
+    
+    public function form()
+    {
+        return view('projects.index');
     }
 }

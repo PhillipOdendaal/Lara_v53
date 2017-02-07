@@ -26,7 +26,9 @@
         ]); ?>
     </script>
     
-    <!-- Scripts -->
+    <!-- Scripts 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+-->
     <script src="{{ elixir('js/app.min.js') }}"></script>
 </head>
 <div id="app">
@@ -98,7 +100,7 @@
                     </button>
                 </div>
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard - Swagger</div>
+                <div class="panel-heading"><h3>Dashboard - Swagger API</h3></div>
                 
                 <div id="my-alert-box" class="alert alert-info collapse" role="alert">
                     <button type="button" class="close" data-toggle="collapse" href="#my-alert-box">
@@ -148,83 +150,134 @@
         </div>
     </div>
 </div>
-<script>
-$(document).ready(function () {
+    <script>
+    $(document).ready(function () {
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    
-    $.ajax({
-        url: '/swagger/profile',
-        type: 'GET',
-        dataType: 'JSON',
-        data: {},
-        success: function(data, code) {
-            if(code > 200){
-                $('#status').text('Disconnected');
-            }else{
-                $('#status').text('Connected');
-                $('#token').val(data.token);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: '/swagger/profile',
+            type: 'GET',
+            dataType: 'JSON',
+            data: {},
+            success: function(data, code) {
+                if(code > 200){
+                    $('#status').text('Disconnected');
+                }else{
+                    $('#status').text('Connected');
+                    $('#token').val(data.token);
+                    $("#my-alert").toggleClass("hidden");
+                    $("#projects").toggleClass("hidden");
+
+                    setTimeout(function() {
+                        getProjects();
+                    }, 5000);
+                }
+            },
+            error: function(e) {
+                $('#status').text('Error');
                 $("#my-alert").toggleClass("hidden");
-                $("#projects").toggleClass("hidden");
-                
-                setTimeout(function() {
-                    getProjects();
-                }, 5000);
             }
-        },
-        error: function(e) {
-            $('#status').text('Error');
-            $("#my-alert").toggleClass("hidden");
-        }
+        });
     });
-});
 
-$("#show-my-alert, .close").click(function() {
-    $("#my-alert").toggleClass("hidden");
-});
-
-function getProjects(){
-
-    var token = $('#token').val();
+    $("#show-my-alert, .close").click(function() {
+        $("#my-alert").toggleClass("hidden");
+    });
     
-    $.ajax({
-        url: '/swagger/projects',
-        type: 'GET',
-        contentType: 'application/json; charset=utf-8',
-        //dataType: 'text json', //Laravel object error
-        data: {'token':token},
-        success: function(response) {
-            //console.log(response);
-            //console.log(code);
-            
-            $("#SwaggerLogin").toggleClass("hidden");
-            $('#projectsContainer').html(response);
-            $("#my-alert").toggleClass("hidden");
-            
-            /**
-            if(response.code > 200){
-                $('#status').text(data);
-                $("#SwaggerLogin").toggleClass("hidden");
-            }else{
-                $('#SwaggerLogin').toggleClass("hidden");
-                $('#projectsContainer').html(data);
-                //$('#projectsContainer').text(data);
-            }
-            **/
-        },
-        error: function(e) {
-            //console.log(e);
-            //console.log(e.status);
-            $('#status').text('Error');
-            $("#my-alert").toggleClass("hidden");
-        }
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').focus();
     });
-}
-</script>
+    
+    /*----------------------------------------------------
+     * Load all projects for this user
+     ----------------------------------------------------*/
+    function getProjects(){
+
+        var token = $('#token').val();
+
+        $.ajax({
+            url: '/swagger/projects',
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            //dataType: 'text json', //Laravel object error
+            data: {'token':token},
+            success: function(response) {
+                //console.log(response);
+                //console.log(code);
+
+                $("#SwaggerLogin").toggleClass("hidden");
+                $('#projectsContainer').html(response);
+                $("#my-alert").toggleClass("hidden");
+
+                /**
+                if(response.code > 200){
+                    $('#status').text(data);
+                    $("#SwaggerLogin").toggleClass("hidden");
+                }else{
+                    $('#SwaggerLogin').toggleClass("hidden");
+                    $('#projectsContainer').html(data);
+                    //$('#projectsContainer').text(data);
+                }
+                **/
+            },
+            error: function(e) {
+                //console.log(e);
+                //console.log(e.status);
+                $('#status').text('Error');
+                $("#my-alert").toggleClass("hidden");
+            }
+        });
+    }
+    
+    /*----------------------------------------------------
+     * Load new project-form instance
+     ----------------------------------------------------*/
+    function addProjects(){
+        $('.modal-body').text('Load Project form instance');
+        
+        $.ajax({
+            url: '/project',
+            type: 'GET',
+            contentType: 'charset=utf-8',
+            data: null,
+            success: function(response) {
+                $('.modal-body').html(response);
+                $('.modal-title').html('Add new Project');
+            },
+            error: function(e) {
+                $('#status').text('Error');
+                $("#my-alert").toggleClass("hidden");
+            }
+        });
+    }
+
+    </script>
     </div>
+    <!-- Modal HTML -->
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Confirmation</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-notice col-md-6 col-md-offset-2">
+                    <p>Do you want to save changes you made to document before closing?</p>
+                    <p class="text-warning"><small>If you don't save, your changes will be lost.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

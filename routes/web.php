@@ -37,6 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/swagger/profile', 'SwaggerController@index');
     Route::get('/swagger/projects', 'SwaggerController@show');
     
+    Route::get('/project', 'ProjectController@form');
+    
     /**
     Route::get('user/profile', function () {
         return view('/user/profile');
