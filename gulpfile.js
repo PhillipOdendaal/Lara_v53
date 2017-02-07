@@ -22,7 +22,7 @@ var paths = {
         'less': './public/dev/less/',
         'scss': './public/dev/scss/',
         'js': './public/dev/js/',
-        'vendor': './public/dev/vendor/'
+        'css': './public/dev/css/'
     },
     'assets': {
         'css': './public/assets/css/',
@@ -101,7 +101,8 @@ gulp.task('style.css', function() {
       //paths.dev.less+'bootstrap.less',
       //paths.dev.less+'variables.less'
       paths.bower.css+'variables.less',
-      paths.bower.css+'bootstrap.less'
+      paths.bower.css+'bootstrap.less',
+      //paths.dev.css+'font-awesome.min'
   ]).pipe(less())
     .pipe(concat('style.css'))
     .pipe(gulp.dest(paths.assets.css)) // output: style.css
@@ -159,7 +160,7 @@ gulp.task('default', ['style.css'], function(){});
 // Run Elixer to compile and version scripts
 // Gulp
 elixir(function(mix) {    
-    mix.version([paths.public.css+'style.min.css', paths.public.js+'app.min.js']);
+    mix.version([paths.public.css+'style.min.css', paths.dev.css+'font-awesome.min.css', paths.public.js+'app.min.js']);
     mix.remove([ paths.public.css, paths.public.js ]);
 });
 
