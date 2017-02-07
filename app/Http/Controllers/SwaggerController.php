@@ -33,6 +33,10 @@ class SwaggerController extends Controller
     {
         $this->request = $request;
     }
+    public function load()
+    {
+        return view('swagger.index')->with('status', 'Swagger Loaded');;
+    }
     
     public function index()
     {
@@ -63,10 +67,10 @@ class SwaggerController extends Controller
         return $request->getBody();
     }
     
-    public function show(){
-        //print_r($this->request);
-    //public function show($token){
-        /*
+    public function show(Request $request){
+        
+        $token = $request->input('token');
+
         $headers = [
             'content-type' => 'application/json',
             'Authorization' => $token
@@ -74,15 +78,30 @@ class SwaggerController extends Controller
         
         $client = new Client();
         
-        $request = $client->post('http://userservice.staging.tangentmicroservices.com:80/api-token-auth/', 
+        $response = $client->get('http://projectservice.staging.tangentmicroservices.com:80/api/v1/projects/', 
                 [
-                    'headers' => $headers, 
-                    'json' => $data,
+                    'headers' => $headers
                 ],''
             );
-        return $request->getBody();
-         *
-         */
+        
+        $projects = json_decode($response->getBody());
+        $merge = '';
+        
+        if($request->ajax()) {
+            //return view('swagger.projects', ['projects' => json_decode($response->getBody())], $merge);
+            //return view('swagger.projects', ['projects' => json_decode($response->getBody())]);
+            return view('swagger.projects')->with('projects', json_decode($response->getBody()));
+        }else{
+            return response()
+                ->view('swagger.projects', ['projects' => json_decode($response->getBody())], 200)
+                ->header('Content-Type', 'json');
+            /*
+             * return response()->json([
+             *      'view' => view('swagger.projects', ['projects' => json_decode($response->getBody())])->render()
+             * ]);
+             */
+        }
+        
     }
     
     public function destroy($id){}

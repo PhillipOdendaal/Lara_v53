@@ -14,7 +14,9 @@
 
                 <div class="panel-body">Statistics about the Site</div>
                 
-                <div class="panel-body"><a href="{{ url('/swagger') }}">Load Swagger</a></div>
+                <div class="panel-body">
+                    <a class="btn btn-primary" href="{{ url('/swagger/index') }}">Load Swagger-API</a>
+                </div>
             </div>
         </div>
     </div>

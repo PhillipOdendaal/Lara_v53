@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('dashboard')
 
 @section('content')
 <div class="container">
@@ -36,6 +36,9 @@
                 @endif
                 -->
                 <div class="panel-body">{{ Auth::user()->name }}
+                    <!-- Auth 
+                        * TODO: Add Swagger profile and roles to Users
+                    -->
                     <form id="SwaggerLogin" class="form-horizontal" role="form" method="POST">
                         <div class="form-group hidden">
                             <div class="col-md-4 col-md-offset-2">
@@ -57,7 +60,9 @@
                         <input type="hidden" name="token" value="" id="token">
                     </form>
                     <!-- Projects -->
-                    <div class="projects"></div>
+                    <div id="projectsContainer">
+                        @yield('content_project')
+                    </div>
                 </div>
             </div>
         </div>
@@ -99,23 +104,22 @@ $("#show-my-alert, .close").click(function() {
 });
 
 function getProjects(){
-    console.log('getProjects');
+
     var token = $('#token').val();
     
     $.ajax({
         url: '/swagger/projects',
         type: 'GET',
         dataType: 'JSON',
-        data: token,
+        data: {'token':token},
         success: function(data, code) {
-            console.log(code);
-            console.log(data);
             if(code > 200){
                 $('#status').text(data);
                 $("#SwaggerLogin").toggleClass("hidden");
             }else{
                 $('#SwaggerLogin').toggleClass("hidden");
-                
+                $('#projectsContainer').html(data);
+                //$('#projectsContainer').text(data);
             }
         },
         error: function(e) {

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Swagger') }}</title>
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ elixir('css/style.min.css') }}" />
+
+    <!-- Scripts -->
+    <script>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+    </script>
+    
+    <!-- Scripts -->
+    <script src="{{ elixir('js/app.min.js') }}"></script>
+</head>
+<div id="app">
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+
+                    <!-- Collapsed Hamburger -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <!-- Branding Image -->
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        {{ config('app.name', 'Laravel') }}
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="nav navbar-nav">
+                        &nbsp;
+                    </ul>
+                    <!-- Right Side Of Navbar -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- Authentication Links -->
+                        @if (Auth::guest())
+                            <li><a href="{{ url('/login') }}">Login</a></li>
+                            <li><a href="{{ url('/register') }}">Register</a></li>
+                        @else
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ url('/logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+
+                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    <div class="container">
+    <div class="row">
+        <div class="col-md-12 col-md-offset-0">
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+            <div id="my-alert" class="alert alert-warning hidden" role="alert">
+                    <label id="status">Status</label>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Dashboard - Swagger</div>
+                
+                <div id="my-alert-box" class="alert alert-info collapse" role="alert">
+                    <button type="button" class="close" data-toggle="collapse" href="#my-alert-box">
+                       <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                    <label type="text" class="btn-primary" id="status">Status</label>
+                 </div>
+                <!--
+                @if (session('user'))
+                    <div>{{ $attr->id }}</div>
+                    <!--
+                    @foreach ($user as $attr)
+                        <div>{{ $attr->id }}</div>
+                        <div>{{ $attr->name }}</div>
+                    @endforeach
+                    
+                @endif
+                -->
+                <div class="panel-body">
+                    <!-- Auth 
+                        * TODO: Add Swagger profile and roles to Users
+                        * GET TASK specific
+                    -->
+                    <form id="SwaggerLogin" class="form-horizontal" role="form" method="POST">
+                        <div class="form-group hidden">
+                            <div class="col-md-4 col-md-offset-2">
+                                <label for="username">username</label>
+                                <input type="text" name="username" value="admin1" id="username">
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <div class="col-md-4 col-md-offset-2">
+                                <label for="password">password</label>
+                                <input type="text" name="password" value="admin1" id="password">
+                            </div>
+                        </div>
+                        <input type="hidden" name="token" value="" id="token">
+                    </form>
+                    <!-- Projects -->
+                    <div id="projectsContainer">
+                        <div class="col-md-4 col-md-offset-4">
+                            <a style="width:100%" class="btn btn-primary hidden" onclick="getProjects()" id="projects">Loading Projects...</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function () {
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
+    $.ajax({
+        url: '/swagger/profile',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {},
+        success: function(data, code) {
+            if(code > 200){
+                $('#status').text('Disconnected');
+            }else{
+                $('#status').text('Connected');
+                $('#token').val(data.token);
+                $("#my-alert").toggleClass("hidden");
+                $("#projects").toggleClass("hidden");
+                
+                setTimeout(function() {
+                    getProjects();
+                }, 5000);
+            }
+        },
+        error: function(e) {
+            $('#status').text('Error');
+            $("#my-alert").toggleClass("hidden");
+        }
+    });
+});
+
+$("#show-my-alert, .close").click(function() {
+    $("#my-alert").toggleClass("hidden");
+});
+
+function getProjects(){
+
+    var token = $('#token').val();
+    
+    $.ajax({
+        url: '/swagger/projects',
+        type: 'GET',
+        contentType: 'application/json; charset=utf-8',
+        //dataType: 'text json', //Laravel object error
+        data: {'token':token},
+        success: function(response) {
+            //console.log(response);
+            //console.log(code);
+            
+            $("#SwaggerLogin").toggleClass("hidden");
+            $('#projectsContainer').html(response);
+            $("#my-alert").toggleClass("hidden");
+            
+            /**
+            if(response.code > 200){
+                $('#status').text(data);
+                $("#SwaggerLogin").toggleClass("hidden");
+            }else{
+                $('#SwaggerLogin').toggleClass("hidden");
+                $('#projectsContainer').html(data);
+                //$('#projectsContainer').text(data);
+            }
+            **/
+        },
+        error: function(e) {
+            //console.log(e);
+            //console.log(e.status);
+            $('#status').text('Error');
+            $("#my-alert").toggleClass("hidden");
+        }
+    });
+}
+</script>
+    </div>
+</body>
+</html>

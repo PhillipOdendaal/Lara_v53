@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::get('/swagger', 'HomeController@loadSwagger');
     
+    Route::get('/swagger/index', 'SwaggerController@load');
     Route::get('/swagger/profile', 'SwaggerController@index');
     Route::get('/swagger/projects', 'SwaggerController@show');
     
