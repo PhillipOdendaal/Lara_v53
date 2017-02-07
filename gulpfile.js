@@ -36,6 +36,13 @@ var paths = {
     'public': {
         'css': './public/css/',
         'js': './public/js/',
+    },
+    'bower': {
+        'vendor': './public/assets/bower_vendor/',
+        'css': './public/assets/bower_vendor/bootstrap/less/',
+        'bootstrap': './public/assets/bower_vendor/bootstrap/js/',
+        'js': './public/assets/bower_vendor/jquery/dist/',
+
     }
 
 };
@@ -90,10 +97,12 @@ gulp.task('backend.js', function(){
 // All CSS
 gulp.task('style.css', function() {  
   return gulp.src([
-      paths.dev.less+'frontend.less',
-      paths.dev.less+'bootstrap.less',
-      paths.dev.less+'variables.less'
-  ]).pipe(less())   
+      //paths.dev.less+'frontend.less',
+      //paths.dev.less+'bootstrap.less',
+      //paths.dev.less+'variables.less'
+      paths.bower.css+'variables.less',
+      paths.bower.css+'bootstrap.less'
+  ]).pipe(less())
     .pipe(concat('style.css'))
     .pipe(gulp.dest(paths.assets.css)) // output: style.css
     .pipe(minify({keepSpecialComments:0}))
@@ -104,8 +113,12 @@ gulp.task('style.css', function() {
 // All JS
 gulp.task('app.js', function(){  
   return gulp.src([
-      paths.assets.vendor+'jquery/dist/jquery.js',
-      paths.assets.vendor+'bootstrap/dist/js/bootstrap.js',
+      //paths.assets.vendor+'bootstrap-sass/assets/javascripts/bootstrap.js',
+      //paths.assets.vendor+'bootstrap/dist/js/bootstrap.js',
+      //paths.bower.js+'variables.less',
+      
+      paths.bower.js+'jquery.js',
+      paths.assets.vendor+'bootstrap-sass/assets/javascripts/bootstrap.js',
     ])
     .pipe(concat('app.js'))
     .pipe(gulp.dest(paths.assets.js))
@@ -113,15 +126,6 @@ gulp.task('app.js', function(){
     .pipe(uglify())
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest(paths.public.js));
-});
-
-// Print All
-gulp.task('gp_print', function() {
-  gulp.src([
-      paths.dev.js+'/*.js',
-      paths.dev.less+'*.less'
-  ])
-    .pipe(gp_print());
 });
 
 // Cleanup paths
@@ -154,9 +158,18 @@ gulp.task('default', ['style.css'], function(){});
 // --- ELIXER FUNCTIONS
 // Run Elixer to compile and version scripts
 // Gulp
-elixir(function(mix) {
+elixir(function(mix) {    
     mix.version([paths.public.css+'style.min.css', paths.public.js+'app.min.js']);
     mix.remove([ paths.public.css, paths.public.js ]);
-    //mix.print([ paths.public.css, paths.public.js ]);
 });
 
+// Print All
+gulp.task('gp_print', function() {
+  gulp.src([
+      paths.dev.js+'/*.js',
+      paths.dev.less+'*.less',
+      paths.build.js+'/*',
+      paths.build.css+'*'
+  ])
+    .pipe(gp_print());
+});
