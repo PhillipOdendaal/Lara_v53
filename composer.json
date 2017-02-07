@@ -9,7 +9,8 @@
         "laravel/framework": "5.3.*",
         "phpunit/phpunit": "5.*",
         "ellipsesynergie/api-response": "^0.12.3",
-		"zjango/laracurl": "dev-master" 
+	"zjango/laracurl": "dev-master",
+        "guzzlehttp/guzzle": "^6.2" 
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
