@@ -10,7 +10,8 @@
         "phpunit/phpunit": "5.*",
         "ellipsesynergie/api-response": "^0.12.3",
 	"zjango/laracurl": "dev-master",
-        "guzzlehttp/guzzle": "^6.2" 
+        "guzzlehttp/guzzle": "^6.2" ,
+        "laravelcollective/html": "^5.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

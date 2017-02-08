@@ -39,6 +39,9 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::get('/project', 'ProjectController@form');
     
+    Route::resource('/txProjects', 'txProjectController');
+    Route::post('/txProjects/store', 'txProjectController@store');
+    
     /**
     Route::get('user/profile', function () {
         return view('/user/profile');

@@ -163,7 +163,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        //laravelcollective\html\HtmlServiceProvider,
+        //Illuminate\Html\HtmlServiceProvider, 
         /*
          * Package Service Providers...
          */
@@ -177,7 +178,14 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,        
+        App\Providers\RouteServiceProvider::class,      
+        
+        //'Illuminate\Html\HtmlServiceProvider', 
+        //'Form'      => 'Illuminate\Html\FormFacade',
+        //'Html'      => 'Illuminate\Html\HtmlFacade',
+        
+        //Laravelcollective\Html\HtmlServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -226,6 +234,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Laracurl'  => Zjango\Laracurl\Facades\Laracurl::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
 
     ],
 

@@ -78,6 +78,8 @@ class SwaggerController extends Controller
         
         $client = new Client();
         
+        //$res = $client->request('GET', 'https://api.github.com/repos/guzzle/guzzle'); // alternative method not tested
+        
         $response = $client->get('http://projectservice.staging.tangentmicroservices.com:80/api/v1/projects/', 
                 [
                     'headers' => $headers

@@ -180,9 +180,9 @@
                     $("#my-alert").toggleClass("hidden");
                     $("#projects").toggleClass("hidden");
 
-                    setTimeout(function() {
+                    //setTimeout(function() {
                         getProjects();
-                    }, 5000);
+                    //}, 5000);
                 }
             },
             error: function(e) {
@@ -200,6 +200,11 @@
         $('#myInput').focus();
     });
     
+    $( "#saveProject" ).click(function( event ) {
+        event.preventDefault();
+        saveProject();
+    });
+    
     /*----------------------------------------------------
      * Load all projects for this user
      ----------------------------------------------------*/
@@ -212,6 +217,9 @@
             type: 'GET',
             contentType: 'application/json; charset=utf-8',
             //dataType: 'text json', //Laravel object error
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             data: {'token':token},
             success: function(response) {
                 //console.log(response);
@@ -248,7 +256,8 @@
         $('.modal-body').text('Load Project form instance');
         
         $.ajax({
-            url: '/project',
+            //url: '/project',
+            url: '/txProjects/create',
             type: 'GET',
             contentType: 'charset=utf-8',
             data: null,
@@ -262,7 +271,27 @@
             }
         });
     }
-
+    /*----------------------------------------------------
+     * Save new project
+     ----------------------------------------------------*/
+    function saveProject(){
+        var params = $('.SavetxProjects').serialize();
+        $.ajax({
+            url: '/txProjects/store',
+            type: 'POST',
+            contentType: 'charset=utf-8',
+            data: params,
+            success: function(response) {
+                $('.modal-body').html(response);
+                //$('.modal-title').html('Project');
+            },
+            error: function(e) {
+                $('#status').text('Error');
+                $("#my-alert").toggleClass("hidden");
+            }
+        });
+        
+    }
     </script>
     </div>
     <!-- Modal HTML -->
