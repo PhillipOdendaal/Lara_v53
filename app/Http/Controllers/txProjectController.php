@@ -63,6 +63,46 @@ class txProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $headers = [
+                'content-type' => 'application/json',
+                'Authorization' => $get_array['txtoken']
+            ];
+        
+            
+        $data = [
+            'title' => $get_array['title'],
+            'description' => $get_array['description'],
+            'start_date' => $get_array['start_date'],
+            'end_date' => $get_array['end_date'],
+            'billable' => $get_array['billable'],
+            'is_active' => $get_array['is_active'],
+            'task_set' => [], //Need mapping
+            'resource_set' => [], //Need mapping
+        ];
+
+        //$client = new Client(); // Start new endpoint
+
+        $endpoint = $client->post('http://projectservice.staging.tangentmicroservices.com:80/api/v1/projects/', 
+                [
+                    'headers' => $headers, 
+                    'form_params' => json_encode($data),
+                ],''
+            );
+            
+        $client = new Client([
+            'base_uri' => API_URI,
+            'cookies' => $this->jar
+        ]);
+        ); // Start new endpoint
+        
+        $this->guzzle_instance = new \GuzzleHttp\Client([
+            'base_uri' => API_URI,
+            'cookies' => $this->jar
+        ]);
+        return $this;
+    }
+    public function store2(Request $request)
+    {
         /**
          * Validator always/defaults fails for some reason ???
         $messages = [
@@ -193,6 +233,24 @@ class txProjectController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    protected function processRequest($method, $sub_uri, $body = null, $headers = null)
+    {
+        
+        try {
+             $this->response = $this->guzzle_instance->request($method, $sub_uri, array(
+            'headers' => $headers,
+            'body' => $body
+            ));    
+       }
+       catch (GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
+            $result =  $response->getBody();
+
+            //do something with it....
+
+       }
     }
 
 }
