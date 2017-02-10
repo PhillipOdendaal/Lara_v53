@@ -4,34 +4,33 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Swagger') }}</title>
-    
-    <!-- Fonts 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
-    -->
     <link href="{{ elixir('css/font-awesome.min.css') }}" />
-    
-    <!-- Styles 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    -->
     <!-- Styles -->
     <link rel="stylesheet" href="{{ elixir('css/style.min.css') }}" rel="stylesheet" type="text/css"/>
+    <style>
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
 
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
-    
-    <!-- Scripts 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
--->
     <script src="{{ elixir('js/app.min.js') }}"></script>
 </head>
 <div id="app">
@@ -144,10 +143,8 @@
                     </form>
                     <!-- Projects -->
                     <div id="projectsContainer">
-                        <div class="col-md-4 col-md-offset-4">
-                            <a style="width:100%" class="btn btn-primary hidden" onclick="getProjects()" id="projects">Loading Projects...</a>
-                            * TODO: Add WebSocs to get better concurrency control
-                        </div>
+                            <!-- <a style="width:100%" class="btn btn-primary hidden" onclick="getProjects()" id="projects">Loading Projects...</a> -->
+                            <!-- * TODO: Add WebSocs to get better concurrency control -->
                     </div>
                 </div>
             </div>
@@ -155,6 +152,12 @@
     </div>
 </div>
     <script>
+        var HTMLloader = [
+            '<div class="col-md-4 col-md-offset-4">',
+            '<div class="loader" style="margin:0px auto"></div>',
+            '<p style="text-align:center">Loading Projects...</p></div>'
+        ].join("\n");
+
     /*----------------------------------------------------
      * DOM Functions
      ----------------------------------------------------*/
@@ -171,18 +174,20 @@
             type: 'GET',
             dataType: 'JSON',
             data: {},
-            success: function(data, code) {
-                if(code > 200){
-                    $('#status').text('Disconnected');
+            success: function(data) {
+
+                if(data.code > 200){
+                    $('#status').text('HTTP ('+data.code+') '+ data.body);
+                    $('#my-alert').toggleClass("hidden");
                 }else{
                     $('#status').text('Connected');
                     $('#token').val(data.token);
                     $("#my-alert").toggleClass("hidden");
                     $("#projects").toggleClass("hidden");
+                    
+                    getProjects();
 
-                    //setTimeout(function() {
-                        getProjects();
-                    //}, 5000);
+                    $('#projectsContainer').html(HTMLloader);
                 }
             },
             error: function(e) {
@@ -222,23 +227,24 @@
             },
             data: {'token':token},
             success: function(response) {
-                //console.log(response);
+                console.log(response);
                 //console.log(code);
 
-                $("#SwaggerLogin").toggleClass("hidden");
-                $('#projectsContainer').html(response);
-                $("#my-alert").toggleClass("hidden");
+                //$("#SwaggerLogin").toggleClass("hidden");
+                //$('#projectsContainer').html(response);
+                //$("#my-alert").toggleClass("hidden");
 
-                /**
+                /**/
                 if(response.code > 200){
-                    $('#status').text(data);
+                    //$('#status').text(data);
                     $("#SwaggerLogin").toggleClass("hidden");
+                    $("#my-alert").toggleClass("hidden").html('Error:'+response.code);
                 }else{
                     $('#SwaggerLogin').toggleClass("hidden");
                     $('#projectsContainer').html(data);
                     //$('#projectsContainer').text(data);
                 }
-                **/
+                /**/
             },
             error: function(e) {
                 //console.log(e);
