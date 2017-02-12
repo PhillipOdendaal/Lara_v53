@@ -8,13 +8,14 @@
                 <div class="alert alert-success">
                     {{ session('status') }}
                 </div>
+            @else
+                <div id="my-alert" class="alert alert-warning hidden" role="alert">
+                <label id="status">Status</label>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             @endif
-            <div id="my-alert" class="alert alert-warning hidden" role="alert">
-                    <label id="status">Status</label>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard - Swagger</div>
                 

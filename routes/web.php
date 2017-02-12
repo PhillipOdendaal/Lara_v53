@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/txProjects', 'txProjectController');
     Route::post('/txProjects/store', 'txProjectController@store');
     
+    Route::resource('/weather', 'ApixuController');
+    
     /**
     Route::get('user/profile', function () {
         return view('/user/profile');
