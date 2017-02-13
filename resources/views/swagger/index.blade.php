@@ -226,29 +226,19 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {'token':token},
-            success: function(response) {
-                console.log(response);
-                //console.log(code);
+            success: function(data) {
+                //console.log(response);
+                //console.log(data.code);
 
-                //$("#SwaggerLogin").toggleClass("hidden");
-                //$('#projectsContainer').html(response);
-                //$("#my-alert").toggleClass("hidden");
-
-                /**/
-                if(response.code > 200){
-                    //$('#status').text(data);
+                if(data.code > 200){
                     $("#SwaggerLogin").toggleClass("hidden");
-                    $("#my-alert").toggleClass("hidden").html('Error:'+response.code);
+                    $("#my-alert").toggleClass("hidden").html('Error:'+data.code);
                 }else{
                     $('#SwaggerLogin').toggleClass("hidden");
                     $('#projectsContainer').html(data);
-                    //$('#projectsContainer').text(data);
                 }
-                /**/
             },
             error: function(e) {
-                //console.log(e);
-                //console.log(e.status);
                 $('#status').text('Error');
                 $("#my-alert").toggleClass("hidden");
             }
