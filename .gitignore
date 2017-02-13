@@ -7,3 +7,4 @@ Homestead.yaml
 .env
 /public/assets/bower_vendor/
 /nbproject
+npm-debug.log

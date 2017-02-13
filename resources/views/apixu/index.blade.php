@@ -26,6 +26,71 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        .weather-symbol-Clear {
+            width:100px;
+            height: 100px;
+            background: url({{ elixir('images/weather-symbols.png') }}) no-repeat rgba(255, 255, 255, 0);
+            background-position: 5px 7px;
+            background-size: 190px;
+            margin: 0 auto;
+        }
+        .weather-symbol-Overcast {
+            width:100px;
+            height: 100px;
+            background: url({{ elixir('images/weather-symbols.png') }}) no-repeat -90px 10px rgba(255, 255, 255, 0);
+            background-position: -90px 10px;
+            background-size: 190px;
+            margin: 0 auto;
+        }
+        .weather-symbol-Sunny {
+            width:100px;
+            height: 100px;
+            background: url({{ elixir('images/weather-symbols.png') }}) no-repeat rgba(255, 255, 255, 0);
+            background-position: 5px 7px;
+            background-size: 190px;
+            margin: 0 auto;
+        }
+        .weather-symbol-Mist {
+            width:100px;
+            height: 100px;
+            background: url({{ elixir('images/weather-symbols.png') }}) no-repeat rgba(255, 255, 255, 0);
+            background-position: -100px 10px;
+            background-size: 190px;
+            margin: 0 auto;
+        }
+        .weather-symbol-Light {
+            width:100px;
+            height: 100px;
+            background: url({{ elixir('images/weather-symbols.png') }}) no-repeat rgba(255, 255, 255, 0);
+            background-position: 10px -90px;
+            background-size: 190px;
+            margin: 0 auto;
+        }
+        .weather-symbol-Partly {
+            width:100px;
+            height: 100px;
+            background: url({{ elixir('images/weather-symbols.png') }}) no-repeat rgba(255, 255, 255, 0);
+            background-position: -100px 10px;
+            background-size: 190px;
+            margin: 0 auto;
+        }
+        .weather-symbol-Thundery {
+            width:100px;
+            height: 100px;
+            background: url({{ elixir('images/weather-symbols.png') }}) no-repeat rgba(255, 255, 255, 0);
+            background-position: -100px -180px;
+            background-size: 190px;
+            margin: 0 auto;
+        }
+        .weather-symbol-Moderate {
+            width:100px;
+            height: 100px;
+            background: url({{ elixir('images/weather-symbols.png') }}) no-repeat rgba(255, 255, 255, 0);
+            background-position: -100px -90px;
+            background-size: 190px;
+            margin: 0 auto;
+        }
     </style>
     <!-- Scripts -->
     <script>
@@ -115,14 +180,15 @@
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
-            <th>name</th>    
-            <th>region</th>
-            <th>country</th>
-            <th>lon</th>
-            <th>lat</th>
-            <th>tz_id</th>
-            <th>localtime_epoch</th>
-            <th>localtime</th>
+            <th>Location name</th>    
+            <th>Region</th>
+            <th>Country</th>
+            <th>latitude</th>
+            <th>longitude</th>
+            <th>Time zone</th>
+            <th>Epoch time</th>
+            <th>&nbsp;</th>
+            <th>Local time</th>
         </tr>
     </thead>
     <tbody>
@@ -130,15 +196,18 @@
             <td>{{$weather['location']['name']}}</td>
             <td>{{$weather['location']['region']}}</td>
             <td>{{$weather['location']['country']}}</td>
-            <td>{{$weather['location']['lon']}}</td>
             <td>{{$weather['location']['lat']}}</td>
+            <td>{{$weather['location']['lon']}}</td>
             <td>{{$weather['location']['tz_id']}}</td>
             <td>{{$weather['location']['localtime_epoch']}}</td>
+            <td><img src="{{$weather['current']['condition']['icon']}}" alt="Weather Icon" style="position: absolute;margin: -22px;"></td>
             <td>{{$weather['location']['localtime']}}</td>
         </tr>
     </tbody>
 </table>
+<div class="weather-symbol-{{$weather['current']['condition']['text']}}" ></div>
 
+<!--
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
@@ -155,44 +224,42 @@
     </tr>
     </tbody>
 </table>
-
+-->
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
-            <th>temp_c</th>    
-            <th>temp_f</th>
-            <th>is_day</th>
-            <th>temp_c</th>
-            <th>wind_mph</th>
-            <th>wind_kph</th>
-            <th>wind_degree</th>
-            <th>wind_dir</th>
-            <th>pressure_mb</th>
-            <th>pressure_in</th>
-            <th>precip_mm</th>
-            <th>humidity</th>
-            <th>cloud</th>
-            <th>feelslike_c</th>
-            <th>feelslike_f</th>
+            <th>Temperature</th>    
+            <!--<th>temp_f</th>-->
+            <!--<th>is_day</th>-->
+            <!--<th>wind_mph</th>-->
+            <th>Wind</th>
+            <th>Degree</th>
+            <th>Wind direction</th>
+            <th>Pressure</th>
+            <!--<th>pressure_in</th>-->
+            <th>Average precipitation</th>
+            <th>Humidity</th>
+            <th>Cloud</th>
+            <th>Feelslike</th>
+            <!--<th>feelslike_f</th>-->
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>{{$weather['current']['temp_c']}}</td>
-            <td>{{$weather['current']['temp_f']}}</td>
-            <td>{{$weather['current']['is_day']}}</td>
-            <td>{{$weather['current']['temp_c']}}</td>
-            <td>{{$weather['current']['wind_mph']}}</td>
-            <td>{{$weather['current']['wind_kph']}}</td>
+            <td>{{$weather['current']['temp_c']}}&#x02103;</td>
+            <!--<td>{{$weather['current']['temp_f']}}</td>-->
+            <!--<td>{{$weather['current']['is_day']}}</td>-->
+            <!--<td>{{$weather['current']['wind_mph']}}</td>-->
+            <td>{{$weather['current']['wind_kph']}} kph</td>
             <td>{{$weather['current']['wind_degree']}}</td>
             <td>{{$weather['current']['wind_dir']}}</td>
-            <td>{{$weather['current']['pressure_mb']}}</td>
-            <td>{{$weather['current']['pressure_in']}}</td>
-            <td>{{$weather['current']['precip_mm']}}</td>
+            <td>{{$weather['current']['pressure_mb']}} milibar</td>
+            <!--<td>{{$weather['current']['pressure_in']}}</td>-->
+            <td>{{$weather['current']['precip_mm']}} mm</td>
             <td>{{$weather['current']['humidity']}}</td>
             <td>{{$weather['current']['cloud']}}</td>
-            <td>{{$weather['current']['feelslike_c']}}</td>
-            <td>{{$weather['current']['feelslike_f']}}</td>
+            <td>{{$weather['current']['feelslike_c']}}&#x02103;</td>
+            <!--<td>{{$weather['current']['feelslike_f']}}</td>-->
             
         </tr>
     </tbody>
