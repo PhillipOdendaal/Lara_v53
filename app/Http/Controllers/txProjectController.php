@@ -63,12 +63,14 @@ class txProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $input = $request->getContent();
+        parse_str($input, $get_array);
+ 
         $headers = [
                 'content-type' => 'application/json',
                 'Authorization' => $get_array['txtoken']
             ];
-        
-            
+
         $data = [
             'title' => $get_array['title'],
             'description' => $get_array['description'],
@@ -80,26 +82,34 @@ class txProjectController extends Controller
             'resource_set' => [], //Need mapping
         ];
 
-        //$client = new Client(); // Start new endpoint
-
-        $endpoint = $client->post('http://projectservice.staging.tangentmicroservices.com:80/api/v1/projects/', 
-                [
-                    'headers' => $headers, 
-                    'form_params' => json_encode($data),
-                ],''
-            );
-            
         $client = new Client([
-            'base_uri' => API_URI,
-            'cookies' => $this->jar
+            'base_uri' => $request->url(),
+            'headers' => $headers,
         ]);
-        ); // Start new endpoint
+
+        $options = [
+                'dev' => true,
+                'url' => 'http://projectservice.staging.tangentmicroservices.com:80/api/v1/projects/'
+                ];
         
-        $this->guzzle_instance = new \GuzzleHttp\Client([
-            'base_uri' => API_URI,
-            'cookies' => $this->jar
-        ]);
-        return $this;
+        try {
+            $this->response = $client->request('POST', 'http://projectservice.staging.tangentmicroservices.com:80/api/v1/projects/', [
+                'form_params' => $data
+            ]);
+
+            $responseCode = $this->response->getStatusCode();
+            $responseBody = $this->response->getBody();
+            
+
+            return ['code' => $responseCode, 'body' => $responseBody];
+
+        }catch(\GuzzleHttp\Exception\ClientException $e) {
+            $getResponse = json_decode($e->getResponse()->getBody(), true);
+            $responseCode = $e->getResponse()->getStatusCode();
+
+            return ['code' => $responseCode, 'body' => $getResponse['non_field_errors'][0]];
+        }
+
     }
     public function store2(Request $request)
     {

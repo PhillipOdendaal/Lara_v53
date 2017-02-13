@@ -34,9 +34,6 @@ class SwaggerController extends Controller
      * @param Requests $request
      * @param cURL $curl
      */
-    //public function __construct(Requests $request, Laracurl $curl)
-    //public function __construct(Laracurl $curl)
-    //public function __construct(Request $request, Client $client)
     public function __construct(Request $request)
     {
         $this->request = $request;
@@ -84,7 +81,8 @@ class SwaggerController extends Controller
         return $token;
     }
     
-    public function show(Request $posted){
+    public function show(Request $posted)
+    {
         
         $value = '';
         $token = $posted->input('token');
