@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::resource('/txProjects', 'txProjectController');
     Route::post('/txProjects/store', 'txProjectController@store');
+    Route::get('/txProjects/create', 'txProjectController@create');
     
     Route::resource('/weather', 'ApixuController');
     

@@ -153,7 +153,7 @@
 </div>
     <script>
         var HTMLloader = [
-            '<div class="col-md-4 col-md-offset-4">',
+            '<div class="col-md-4 col-md-offset-4" id="HTMLloader">',
             '<div class="loader" style="margin:0px auto"></div>',
             '<p style="text-align:center">Loading Projects...</p></div>'
         ].join("\n");
@@ -227,8 +227,6 @@
             },
             data: {'token':token},
             success: function(data) {
-                //console.log(response);
-                //console.log(data.code);
 
                 if(data.code > 200){
                     $("#SwaggerLogin").toggleClass("hidden");
@@ -272,14 +270,22 @@
      ----------------------------------------------------*/
     function saveProject(){
         var params = $('.SavetxProjects').serialize();
+        
+        $('.modal-body').append(HTMLloader);
+        $('.SavetxProjects').toggle('hidden');
+        
         $.ajax({
             url: '/txProjects/store',
             type: 'POST',
             contentType: 'charset=utf-8',
             data: params,
             success: function(response) {
-                $('.modal-body').html(response);
-                //$('.modal-title').html('Project');
+                if(response.code > 200 && response.code < 300){
+                    $('#HTMLloader').remove();
+                    $('.modal-body').append('Project Successfuly added');
+                }else{
+                    $('.modal-body').append(response.body)
+                }
             },
             error: function(e) {
                 $('#status').text('Error');
@@ -310,6 +316,5 @@
             </div>
         </div>
     </div>
-
 </body>
 </html>
