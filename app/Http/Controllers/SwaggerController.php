@@ -9,6 +9,15 @@ use App\Swagger;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 
+use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Exception\RequestException;
+
+
+use App\ApixuWeather;
+
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+
 class SwaggerController extends Controller
 {
     protected $request;
@@ -40,32 +49,28 @@ class SwaggerController extends Controller
     public function index()
     {
         $token = '';
-        $headers = [
-            'Accept' => 'application/json'
-        ];
-        $data = [
-                'username' => 'admin2',
-                'password' => 'admin2',
-            ];
-        $url = 'http://userservice.staging.tangentmicroservices.com:80/api-token-auth/';
-
+        $swagger = DB::table('txrequests')->where('tx_name', 'Swagger Login')->first();
+        
         $client = new Client();
         
         try {
-            $this->response = $client->post($url, 
+            $this->response = $client->post(str_replace('"', "",$swagger->tx_path), 
                 [
-                    'headers' => $headers, 
-                    'json' => $data,
+                    'headers' => [$swagger->tx_head],
+                    'json' => [$swagger->tx_payload],
                 ],$token
             );
+
         }catch(\GuzzleHttp\Exception\ClientException $e) {
+            
             $getResponse = json_decode($e->getResponse()->getBody(), true);
             $responseCode = $e->getResponse()->getStatusCode();
 
             return ['code' => $responseCode, 'body' => $getResponse['non_field_errors'][0]];
         }
+        $token = $this->response->getBody();
 
-        return $this->response->getBody();
+        return $token;
     }
     
     public function show(Request $posted){
