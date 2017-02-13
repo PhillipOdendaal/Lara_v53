@@ -1,5 +1,6 @@
 {
   "css/style.min.css": "css/style-f073252918.min.css",
   "css/font-awesome.min.css": "dev/css/font-awesome-4fbd15cb60.min.css",
-  "js/app.min.js": "js/app-44236ef731.min.js"
+  "js/app.min.js": "js/app-44236ef731.min.js",
+  "images/weather-symbols.png": "images/weather-symbols-44236ef731.png"
 }

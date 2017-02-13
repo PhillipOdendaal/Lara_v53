@@ -22,8 +22,8 @@ class TxRequestsSeeder extends Seeder
             'tx_name' => 'Swagger Login',
             'tx_description' => 'Authenticate Swagger API',
             'tx_path' => '"http://userservice.staging.tangentmicroservices.com:80/api-token-auth/"',
-            'tx_head' => '["Accept" => "application/json"]',
-            'tx_payload' => '["username" => "admin2","password" => "admin2"]',
+            'tx_head' => '"Accept" => "application/json"',
+            'tx_payload' => '"username" => "Jacob.zuma","password" => "tangent"',
             'status' => $randomBool,
         ]);
         
@@ -31,11 +31,11 @@ class TxRequestsSeeder extends Seeder
             'tx_name' => 'Swagger Projects',
             'tx_description' => 'Get Projects from Swagger API',
             'tx_path' => '"http://projectservice.staging.tangentmicroservices.com:80/api/v1/projects/"',
-            'tx_head' => '["content-type" => "application/json","Authorization" => "$token"]',
+            'tx_head' => '"content-type" => "application/json","Authorization" => "$token"',
             'tx_payload' => '',
             'status' => $randomBool,
         ]);
-        
+        /**
         DB::table('txrequests')->insert([
             'tx_name' => 'Apixu Current',
             'tx_description' => 'Current Weather',
@@ -53,5 +53,7 @@ class TxRequestsSeeder extends Seeder
             'tx_payload' => '{q=Paris}',
             'status' => $randomBool,
         ]);
+         *
+         */
     }
 }
