@@ -23,7 +23,7 @@ class TxRequestsSeeder extends Seeder
             'tx_description' => 'Authenticate Swagger API',
             'tx_path' => '"http://userservice.staging.tangentmicroservices.com:80/api-token-auth/"',
             'tx_head' => '"Accept" => "application/json"',
-            'tx_payload' => '"username" => "Jacob.zuma","password" => "tangent"',
+            'tx_payload' => '"username":"jacob.zuma","password":"tangent"',
             'status' => $randomBool,
         ]);
         

@@ -50,16 +50,27 @@ class SwaggerController extends Controller
     {
         $token = '';
         $swagger = DB::table('txrequests')->where('tx_name', 'Swagger Login')->first();
-        
-        $client = new Client();
+
+        $data = json_encode(array(
+                'username' => 'jacob.zuma',
+                'password' => 'tangent',
+            ));
+
+        $client = new Client([
+            //'headers' => [ $swagger->tx_head ]
+            'headers' => [ 'Content-Type' => 'application/json' ]
+        ]);
         
         try {
-            $this->response = $client->post(str_replace('"', "",$swagger->tx_path), 
-                [
-                    'headers' => [$swagger->tx_head],
-                    'json' => [$swagger->tx_payload],
-                ],$token
+            $this->response = $client->post(str_replace('"', "",$swagger->tx_path),
+                ['body' => json_encode(
+                    [
+                        'username' => 'jacob.zuma',
+                        'password' => 'tangent',
+                    ]
+                )]
             );
+
 
         }catch(\GuzzleHttp\Exception\ClientException $e) {
             
@@ -68,8 +79,8 @@ class SwaggerController extends Controller
 
             return ['code' => $responseCode, 'body' => $getResponse['non_field_errors'][0]];
         }
+        
         $token = $this->response->getBody();
-
         return $token;
     }
     
@@ -77,20 +88,31 @@ class SwaggerController extends Controller
         
         $value = '';
         $token = $posted->input('token');
+        
         $headers = [
             'content-type' => 'application/json',
-            'Authorization' => $token
+            'Authorization' => "Token $token"
         ];
         $url = 'http://projectservice.staging.tangentmicroservices.com:80/api/v1/projects/';
         
-        $client = new Client();
+        //$client = new Client();
+        
+        $client = new Client([
+            'headers' => [ 
+                    'content-type' => 'application/json',
+                    'Authorization' => 'Token '.$token 
+                ]
+        ]);
 
         try {
-            $this->response = $client->post($url, $headers, $value);
-            $responseCode = $response->getStatusCode();
+            $this->response = $client->get($url, $headers, array());
+ 
+            $responseCode = $this->response->getStatusCode();
             $responseBody = $this->response->getBody();
             
-            if($request->ajax()) {
+            //print_r(json_decode($responseBody));
+            
+            if($posted->ajax()) {
                 return view('swagger.projects', ['code' => $responseCode])->with('projects', json_decode($responseBody));
             }else{
                 return response()
@@ -104,7 +126,6 @@ class SwaggerController extends Controller
 
             return ['code' => $responseCode, 'body' => $getResponse['non_field_errors'][0]];
         }
-
     }
     
     public function destroy($id){}
