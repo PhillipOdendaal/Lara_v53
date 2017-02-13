@@ -19,10 +19,10 @@
         <td class="table-text"></td>
     </tr>
     @foreach ($projects as $project)
+    <form action="{{ url('swagger/tasks/'.$project->pk) }}" method="POST">
+        {{ csrf_field() }}
+        {{ method_field('getMethod') }}
         <tr>
-            <form action="{{ url('swagger/tasks/'.$project->pk) }}" method="POST">
-                {{ csrf_field() }}
-                {{ method_field('getMethod') }}
             <td class="table-text">
                 <div>{{ $project->title }}</div>
             </td>
@@ -49,6 +49,37 @@
                     No
                 @endif</div>
             </td>
+            <td class="table-text hidden">
+                <div class="form-group hidden" id="taskSet-{{ $project->pk }}">
+                <table class="table table-striped project-table">
+                    <thead>
+                        <th>Title</th>
+                        <th>Due Date</th>
+                        <th>Estimated Hours</th>
+                    </thead>
+                    <tbody>
+                    @foreach ($project->task_set as $task)
+                    <tr id="{{ $task->id }}">
+                        <td class="table-text">
+                            <span class="text-info small">{{ $task->project_data->title }}</span><br>
+                            <input type="text" name="title" value="{{ $task->title }}" id="title">
+                        </td>
+                        <td class="table-text">
+                            <span class="text-info small">&nbsp;</span><br>
+                            <input type="text" name="due_date" value="{{ $task->due_date }}" id="due_date">
+                            <input class="datepicker" data-date-format="mm/dd/yyyy">
+                        </td>
+                        <td class="table-text">
+                            <span class="text-info small">&nbsp;</span><br>
+                            <input type="text" name="estimated_hours" value="{{ $task->estimated_hours }}" id="estimated_hours">
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                </div>
+            </td>
+            
             <!-- Edit Button -->
             <td>
                 <button type="submit" id="update-project-{{ $project->pk }}" class="btn btn-default">
@@ -63,9 +94,7 @@
             </td>
             <!-- View Tasks Button -->
             <td>
-                <button type="submit" id="tasks-{{ $project->pk }}" class="btn btn-default">
-                    <i class="fa fa-btn"></i> Tasks
-                </button>
+                <a href="#myModal" role="button" id="{{ $project->pk }}" class="btn btn-default taskset" data-toggle="modal" onclick="showTasks({{ $project->pk }})">Tasks</a>
             </td>
         </tr>
         </form>
@@ -78,3 +107,22 @@
 </tbody>
 @endif
 </table>
+<script>
+    $('.datepicker').datepicker({
+        format: 'mm/dd/yyyy',
+        startDate: '-3d'
+    });
+    /*----------------------------------------------------
+     * Load new project-form instance
+     ----------------------------------------------------*/
+    function showTasks(args){
+        $('.modal-body').text('');
+        var content = $('#taskSet-'+args).html();
+        var modal = $('.modal-body');
+        $('.modal-title').text(' ProjectTasks');
+        $('.modal-dialog').addClass(' modal-lg');
+        $(content).appendTo(modal).removeClass("hidden"); 
+        $('.modal-footer').addClass(' hidden');
+        $('.modal-notice').addClass(' hidden');
+    }
+</script>

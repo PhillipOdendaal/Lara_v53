@@ -106,13 +106,11 @@ class SwaggerController extends Controller
 
         try {
             $this->response = $client->get($url, $headers, array());
-            /**
-            $this->response = $client->post($url, $headers, $value);
-
-             * 
-             */
+ 
             $responseCode = $this->response->getStatusCode();
             $responseBody = $this->response->getBody();
+            
+            //print_r(json_decode($responseBody));
             
             if($posted->ajax()) {
                 return view('swagger.projects', ['code' => $responseCode])->with('projects', json_decode($responseBody));
@@ -125,10 +123,8 @@ class SwaggerController extends Controller
         }catch(\GuzzleHttp\Exception\ClientException $e) {
             $getResponse = json_decode($e->getResponse()->getBody(), true);
             $responseCode = $e->getResponse()->getStatusCode();
-            
-            print_r($getResponse);
 
-            //return ['code' => $responseCode, 'body' => $getResponse['non_field_errors'][0]];
+            return ['code' => $responseCode, 'body' => $getResponse['non_field_errors'][0]];
         }
     }
     
